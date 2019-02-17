@@ -23,7 +23,7 @@ public class FormHandler extends Template{
 		this.add("slot", Integer.toString(slot+1));
 		this.add("code", code);
 		this.add("user", user.getName());
-		this.add("id", user.getID());
+		this.add("id", user.getStringID());
 		this.add("level", Integer.toString(player.level));
 		this.add("nature", NatureList.getNatureIdentifier(player.nature));
 		this.add("typeList", TypeList.getTypeList());

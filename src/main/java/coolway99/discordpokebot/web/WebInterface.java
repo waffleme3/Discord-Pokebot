@@ -69,7 +69,7 @@ public class WebInterface{
 				}
 				ran = Integer.toString(random.nextInt());
 			}
-			IUser user = Pokebot.client.getUserByID(id);
+			IUser user = Pokebot.client.getUserByID(Long.parseUnsignedLong(id));
 			if(user == null){
 				return "ERROR: UNABLE TO GET USER OBJECT" +
 						"\n\nIf you keep getting this error, please make sure you are in a guild with "+Pokebot.config.BOTNAME +
@@ -214,7 +214,7 @@ public class WebInterface{
 					return "Nature Checksum Error (have you been messing with my source code?)";
 				}
 
-				Player player = PlayerHandler.getPlayer(Pokebot.client.getUserByID(id));
+				Player player = PlayerHandler.getPlayer(Pokebot.client.getUserByID(Long.parseUnsignedLong(id)));
 				if(player.inBattle()) return "Error: You are in a battle, your stats cannot be set";
 				player.numOfAttacks = 0;
 				for(int x = 0; x < player.moves.length; x++){

@@ -364,7 +364,7 @@ public class Player{
 	@Override
 	public boolean equals(Object obj){
 		if(obj instanceof Player){
-			return this.user.getID().equals(((Player) obj).user.getID());
+			return this.user.getStringID().equals(((Player) obj).user.getStringID());
 		}
 		return false;
 	}

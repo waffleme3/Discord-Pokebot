@@ -40,7 +40,7 @@ public class BattleManager{
             Pokebot.sendMessage(channel, user.mention()+" there is no battle pending for that person!");
             return;
         }
-        if(!pre.channel.getID().equals(channel.getID())){
+        if(!pre.channel.getStringID().equals(channel.getStringID())){
             Pokebot.sendMessage(channel, " you must do this in the same channel the battle is being hosted in!");
             return;
 		}
@@ -59,7 +59,7 @@ public class BattleManager{
 			Pokebot.sendMessage(channel, "You don't have a battle pending!");
 			return;
 		}
-		if(!pre.channel.getID().equals(channel.getID())){
+		if(!pre.channel.getStringID().equals(channel.getStringID())){
 			Pokebot.sendMessage(channel, "This isn't the same channel where you have the battle pending!");
 			return;
 		}
