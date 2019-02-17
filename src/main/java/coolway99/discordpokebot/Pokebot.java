@@ -7,9 +7,10 @@ import coolway99.discordpokebot.storage.PlayerHandler;
 import coolway99.discordpokebot.web.WebInterface;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
+import sx.blah.discord.handle.obj.ActivityType;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IUser;
-import sx.blah.discord.handle.obj.Status;
+import sx.blah.discord.handle.obj.StatusType;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
@@ -57,18 +58,18 @@ public class Pokebot{
 		timer.scheduleAtFixedRate(PlayerHandler::saveAll, SAVE_DELAY, SAVE_DELAY, TimeUnit.MINUTES);
 		timer.scheduleAtFixedRate(Pokebot::sendAllMessages, MESSAGE_DELAY, MESSAGE_DELAY,
 				TimeUnit.MILLISECONDS);
-		timer.scheduleAtFixedRate(() -> Pokebot.client.changeStatus(Status.game(Pokebot.getRandomGame()))
+		timer.scheduleAtFixedRate(() -> Pokebot.client.changePresence(StatusType.ONLINE, ActivityType.PLAYING, Pokebot.getRandomGame())
 				, GAME_DELAY, GAME_DELAY, TimeUnit.MINUTES);
 		//Now that the main thread is done doing it's business and the bot is busy logging in...
 		Move.registerMoves();
 	}
 
 	public static File getSaveFile(IUser user, byte slot){
-		return new File(config.SAVEDIR+'/'+user.getID()+"/"+slot);
+		return new File(config.SAVEDIR+'/'+user.getStringID()+"/"+slot);
 	}
 
 	public static File getMainFile(IUser user){
-		return new File(config.SAVEDIR+'/'+user.getID()+"/main");
+		return new File(config.SAVEDIR+'/'+user.getStringID()+"/main");
 	}
 
 	public static void sendMessage(IChannel channel, String message){
@@ -144,15 +145,15 @@ public class Pokebot{
 				channel.sendMessage(message);
 			}catch(RateLimitException e){
 				System.err.println("We are being rate limited in channel "
-						+channel.getGuild().getID()+'/'+channel.getID());
+						+channel.getGuild().getStringID()+'/'+channel.getStringID());
 				throw e;
 			}catch(MissingPermissionsException e){
 				System.err.println("We do not have permission to send messages in channel "
-						+channel.getGuild().getID()+'/'+channel.getID());
+						+channel.getGuild().getStringID()+'/'+channel.getStringID());
 			}catch(DiscordException e){
 				e.printStackTrace();
 				System.err.println("\nWe were unable to send messages in channel "
-						+channel.getGuild().getID()+'/'+channel.getID());
+						+channel.getGuild().getStringID()+'/'+channel.getStringID());
 			}
 		});
 	}

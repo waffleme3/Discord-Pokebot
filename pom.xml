@@ -10,11 +10,11 @@
 	<url>https://github.com/Coolway99/Discord-Pokebot</url>
 
 	<properties>
-		<java.version>1.8</java.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
+		<java.version>9</java.version>
+		<maven.compiler.source>9</maven.compiler.source>
+		<maven.compiler.target>9</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jetty.version>9.4.0.v20161208</jetty.version>
+		<jetty.version>9.4.14.v20181114</jetty.version>
 	</properties>
 
 	<repositories>
@@ -40,15 +40,13 @@
 		<dependency>
 			<groupId>com.github.austinv11</groupId>
 			<artifactId>Discord4j</artifactId>
-			<version>2.7.0</version>
-			<classifier>shaded</classifier> <!-- Include this line if you want a shaded jar (all the Discord4J dependencies
-				bundled into one jar) -->
+			<version>2.10.1</version>
 		</dependency>
 		<!-- This is for the web interface -->
 		<dependency>
 			<groupId>com.sparkjava</groupId>
 			<artifactId>spark-core</artifactId>
-			<version>2.5.4</version>
+			<version>2.8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.watertemplate</groupId>
@@ -59,24 +57,24 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.2</version>
+			<version>4.5.7</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>fluent-hc</artifactId>
-			<version>4.5.2</version>
+			<version>4.5.7</version>
 		</dependency>
 		<!-- For parsing Json code -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.7</version>
+			<version>2.8.5</version>
 		</dependency>
 		<!-- For annotations regarding code -->
 		<dependency>
 			<groupId>org.jetbrains</groupId>
 			<artifactId>annotations</artifactId>
-			<version>15.0</version>
+			<version>17.0.0</version>
 		</dependency>
 		<!-- Fixing Jetty -->
 		<dependency>
@@ -127,6 +125,11 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<version>2.7</version>
 			</plugin>
 		</plugins>
 	</build>

@@ -15,36 +15,36 @@ public class PlayerHandler{
 	private static final HashMap<String, MainFile> mainFileMap = new HashMap<>();
 	
 	public static Player getPlayer(IUser user){
-		if(playerMap.containsKey(user.getID())) return playerMap.get(user.getID());
+		if(playerMap.containsKey(user.getStringID())) return playerMap.get(user.getStringID());
 		return getPlayer(user, getMainFile(user).lastSlot);
 	}
 
 	//TODO This is a mess
 	private static Player getPlayer(IUser user, byte slot){
-		if(playerMap.containsKey(user.getID())){
-			if(playerMap.get(user.getID()).slot == slot) return playerMap.get(user.getID());
+		if(playerMap.containsKey(user.getStringID())){
+			if(playerMap.get(user.getStringID()).slot == slot) return playerMap.get(user.getStringID());
 			//ELSE
 			removePlayer(user);
 		}
-		playerMap.put(user.getID(), new Player(user, slot));
-		return playerMap.get(user.getID());
+		playerMap.put(user.getStringID(), new Player(user, slot));
+		return playerMap.get(user.getStringID());
 	}
 
 	public static void switchSlot(IUser user, byte slot){
-		String ID = user.getID();
+		String ID = user.getStringID();
 		if(playerMap.containsKey(ID)) playerMap.remove(ID).saveData();
 		getPlayer(user, slot);
 		return;
 	}
 
 	public static void removePlayer(IUser user){
-		if(!playerMap.containsKey(user.getID())) return;
-		playerMap.remove(user.getID()).saveData();
+		if(!playerMap.containsKey(user.getStringID())) return;
+		playerMap.remove(user.getStringID()).saveData();
 	}
 
 	public static MainFile getMainFile(IUser user){
-		mainFileMap.computeIfAbsent(user.getID(), s -> new MainFile(user));
-		return mainFileMap.get(user.getID());
+		mainFileMap.computeIfAbsent(user.getStringID(), s -> new MainFile(user));
+		return mainFileMap.get(user.getStringID());
 	}
 
 	public static void saveAll(){

@@ -25,7 +25,7 @@ public class MainFile{
 			this.lastSlot = scanner.nextByte();
 		} catch(Exception e){
 			e.printStackTrace();
-			System.err.println("\nUnable to load main file for "+this.user.getID());
+			System.err.println("\nUnable to load main file for "+this.user.getStringID());
 		}
 	}
 
@@ -33,7 +33,7 @@ public class MainFile{
 		File file = Pokebot.getMainFile(this.user);
 		if(!file.exists()){
 			if(!file.getParentFile().exists() && !file.getParentFile().mkdirs()){
-				System.err.println("There was an error creating a directory structure for "+this.user.getID());
+				System.err.println("There was an error creating a directory structure for "+this.user.getStringID());
 				return;
 			}
 		}
@@ -41,7 +41,7 @@ public class MainFile{
 			out.println(this.lastSlot);
 		} catch(Exception e){
 			e.printStackTrace();
-			System.err.println("\nUnable to save main file for "+this.user.getID());
+			System.err.println("\nUnable to save main file for "+this.user.getStringID());
 		}
 	}
 }

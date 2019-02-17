@@ -11,12 +11,13 @@ import coolway99.discordpokebot.states.SubStats;
 import coolway99.discordpokebot.states.Types;
 import coolway99.discordpokebot.storage.PlayerHandler;
 import sx.blah.discord.api.events.EventSubscriber;
-import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
+import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
+import sx.blah.discord.handle.obj.ActivityType;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.IRole;
 import sx.blah.discord.handle.obj.IUser;
-import sx.blah.discord.handle.obj.Status;
+import sx.blah.discord.handle.obj.StatusType;
 import sx.blah.discord.util.MessageBuilder;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class EventHandler{
 		if(message.mentionsEveryone()) return; //We don't want to respond to @everyone
 		IUser author = message.getAuthor(); //The author of the message
 		//We don't want to respond to bots
-		if(author.isBot() && !author.getID().equals(Pokebot.client.getOurUser().getID())) return;
+		if(author.isBot() && !author.getStringID().equals(Pokebot.client.getOurUser().getStringID())) return;
 		IChannel channel = message.getChannel();
 		//The first person the author mentioned, or the author if there was nobody
 		IUser mentionOrAuthor = message.getMentions().isEmpty() ? author : message.getMentions().get(0);
@@ -170,10 +171,10 @@ public class EventHandler{
 				case "clearstats":
 				case "cs":{
 					if(args.length < 2){
-						reply(message, "for safety, you must type your user id\nUsage: clearstats "+author.getID());
+						reply(message, "for safety, you must type your user id\nUsage: clearstats "+author.getStringID());
 						return;
 					}
-					if(!args[1].equals(author.getID())){
+					if(!args[1].equals(author.getStringID())){
 						reply(message, "That is not your user id!");
 						return;
 					}
@@ -468,7 +469,7 @@ public class EventHandler{
 						}
 						//At this point, we know there's a valid move in the slot and neither party has fainted
 						//Before anything else, lets see if the target is the bot
-						if(defender.user.getID().equals(Pokebot.client.getOurUser().getID()) && !attacker.inBattle()){
+						if(defender.user.getStringID().equals(Pokebot.client.getOurUser().getStringID()) && !attacker.inBattle()){
 							Pokebot.sendMessage(channel, author.mention()+" tried hurting me!");
 							return;
 						}
@@ -587,7 +588,7 @@ public class EventHandler{
 					return;
 				}
 				case "saveall":{
-					if(!author.getID().equals(Pokebot.config.OWNERID)){
+					if(!author.getStringID().equals(Pokebot.config.OWNERID)){
 						reply(message, "you are not the owner!");
 						return;
 					}
@@ -607,12 +608,11 @@ public class EventHandler{
 					return;
 				}
 				case "stop":{
-					if(author.getID().equals(Pokebot.config.OWNERID)){
+					if(author.getStringID().equals(Pokebot.config.OWNERID)){
 						try{
 							reply(message, "shutting down");
 							System.out.println("Shutting down by owner request");
-							Pokebot.client.changeStatus(Status.game("Currently Offline"));
-							Pokebot.client.changePresence(true);
+							Pokebot.client.changePresence(StatusType.ONLINE, ActivityType.PLAYING, "Currently Offline");
 							Pokebot.timer.shutdownNow();
 							BattleManager.nukeBattles();
 							Pokebot.sendAllMessages();
@@ -629,7 +629,7 @@ public class EventHandler{
 					return;
 				}
 				case "listallroles":{
-					if(!author.getID().equals(Pokebot.config.OWNERID)) break;
+					if(!author.getStringID().equals(Pokebot.config.OWNERID)) break;
 					List<IRole> roles = channel.getGuild().getRoles();
 					StringBuilder b = new StringBuilder();
 					for(IRole role : roles){
@@ -644,7 +644,7 @@ public class EventHandler{
 					return;
 				}
 				case "testbattle":{
-					if(!author.getID().equals(Pokebot.config.OWNERID)) break;
+					if(!author.getStringID().equals(Pokebot.config.OWNERID)) break;
 					ArrayList<Player> list = new ArrayList<>();
 					list.add(PlayerHandler.getPlayer(author));
 					list.add(PlayerHandler.getPlayer(Pokebot.client.getOurUser()));
@@ -653,7 +653,7 @@ public class EventHandler{
 					return;
 				}
 				case "spoof":{
-					if(!author.getID().equals(Pokebot.config.OWNERID)) break;
+					if(!author.getStringID().equals(Pokebot.config.OWNERID)) break;
 					StringBuilder builder = new StringBuilder(Pokebot.config.COMMAND_PREFIX);
 					for(int x = 1; x < args.length; x++){
 						builder.append(args[x]);
@@ -711,7 +711,7 @@ public class EventHandler{
 					return;
 				}
 				case "guilds":{
-					if(!author.getID().equals(Pokebot.config.OWNERID)) break;
+					if(!author.getStringID().equals(Pokebot.config.OWNERID)) break;
 					reply(message, "I am in "+Pokebot.client.getGuilds().size()+" guilds.");
 					return;
 				}

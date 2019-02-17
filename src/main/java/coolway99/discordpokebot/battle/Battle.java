@@ -80,7 +80,7 @@ public class Battle{
 				return;
 			}
 			this.attacks.put(attacker, new IAttack(attacker, moveSet, defender));
-			if(!channel.getID().equals(this.channel.getID())){
+			if(!channel.getStringID().equals(this.channel.getStringID())){
 				this.sendMessage(attacker.mention()+" sent in their attack from another channel!");
 			} else {
 				this.sendMessage(attacker.mention()+" submitted their attack");
